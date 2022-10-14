@@ -10,7 +10,7 @@ server = Flask(__name__)
 @bot.message_hadler(commands=['start'])
 def start(message):
     id = message.chat.id
-    bot.send_message(id, 'Привет')
+    bot.send_message(id, 'Привет. Оно работает')
 
 
 @server.route('/' + TOKEN, methods=['POST'])
