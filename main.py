@@ -1,4 +1,6 @@
 import telebot
+import os
+from telebot import types
 from flask import Flask, request
 
 TOKEN = '5766023354:AAG5cbHs3fFtJFxO9VplTbXkqxMQm6xWRA0'
@@ -7,7 +9,7 @@ bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
 
 
-@bot.message_hadler(commands=['start'])
+@bot.message_handler(commands=['start'])
 def start(message):
     id = message.chat.id
     bot.send_message(id, 'Привет. Оно работает')
@@ -16,9 +18,10 @@ def start(message):
 @server.route('/' + TOKEN, methods=['POST'])
 def get_message():
     json_str = request.get_data().decode('utf-8')
-    update = telebot.types.de_json(json_str)
+    update = types.Update.de_json(json_str)
     bot.process_new_updates([update])
     return '!', 200
+
 
 @server.route('/')
 def webhook():
